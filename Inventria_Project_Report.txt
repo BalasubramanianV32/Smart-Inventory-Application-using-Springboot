@@ -1,0 +1,157 @@
+================================================================================
+                    INVENTRIA - PROJECT OVERVIEW REPORT
+================================================================================
+Platform Name     : Inventria (Smart Inventory & Warehouse Management Platform)
+Base Workspace    : c:\Inventria
+Date Generated    : August 06, 2026
+Localization      : Indian Rupee (INR - ₹) / en-IN Locale
+
+--------------------------------================--------------------------------
+1. EXECUTIVE SUMMARY
+--------------------------------================--------------------------------
+Inventria is an enterprise-grade Smart Inventory & Warehouse Management Platform designed
+to streamline operations across products, warehouses, suppliers, customers, purchase
+orders, sales orders, analytics, and security configuration.
+
+The project is structured with a modern single-page application (SPA) frontend in React 19,
+Vite, and Tailwind CSS (v4) inside `frontend/`, designed for seamless integration with
+the Spring Boot REST API backend (`com.inventria:inventria-api`) using PostgreSQL and Spring Security.
+
+
+--------------------------------================--------------------------------
+2. FRONTEND ARCHITECTURE & IMPLEMENTATION
+--------------------------------================================================
+Location: c:\Inventria\frontend
+
+Tech Stack & Libraries:
+- Core Framework   : React 19 + Vite 8.2
+- Styling & UI     : Tailwind CSS (v4) with custom enterprise SaaS palette
+- Navigation       : React Router DOM (v6/v7) with protected shell layout
+- Icons            : Lucide React Icons
+- Data Analytics   : Chart.js & react-chartjs-2
+- Form Handling    : React Hook Form with field-level validation
+- State Management : Centralized React Context (`AppContext`) with live CRUD support
+- API Client       : Axios instance (`src/services/api.js`) configured for Spring Boot REST `/api/v1`
+- Localization     : Indian Rupee (`₹` / INR) with `en-IN` numbering format (e.g. ₹2,48,500.75)
+
+Frontend Directory & Component Structure:
+src/
+├── assets/
+├── components/
+│   ├── common/
+│   │   ├── Button.jsx        (Variants: primary, secondary, outline, ghost, danger, success)
+│   │   ├── Input.jsx         (Form input with icons, validation errors, labels)
+│   │   ├── Select.jsx        (Custom select dropdown styled with Tailwind)
+│   │   ├── Card.jsx          (Reusable rounded cards with header & action slots)
+│   │   ├── Table.jsx         (Data grid with quick search, filter, pagination)
+│   │   ├── Modal.jsx         (Accessible dialog popups with backdrop blur)
+│   │   ├── Badge.jsx         (Color-coded status badges for stock & order status)
+│   │   ├── StatCard.jsx      (KPI summary widgets with trend indicators)
+│   │   └── Toast.jsx         (Global alert notification system)
+│   ├── layout/
+│   │   ├── Sidebar.jsx       (Responsive drawer sidebar with INVENTRIA branding & nav links)
+│   │   ├── Navbar.jsx        (Top bar with breadcrumbs, search, notification popup, profile menu)
+│   │   ├── Breadcrumb.jsx    (Dynamic route hierarchy navigation)
+│   │   └── MainLayout.jsx    (Master shell layout)
+│   └── forms/
+│       ├── ProductForm.jsx       (Add/Edit inventory products)
+│       ├── WarehouseForm.jsx     (Add/Edit regional warehouse facilities)
+│       ├── SupplierForm.jsx      (Add/Edit procurement vendors)
+│       ├── CustomerForm.jsx      (Register B2B customer accounts)
+│       ├── CategoryForm.jsx      (Add product categories & department icons)
+│       ├── PurchaseOrderForm.jsx (Multi-line item purchase order builder)
+│       └── SalesOrderForm.jsx    (Multi-line item sales order builder)
+├── pages/
+│   ├── auth/
+│   │   ├── LoginPage.jsx     (Work email login with quick Manager/Employee demo buttons)
+│   │   └── RegisterPage.jsx  (Enterprise account creation with role selection)
+│   ├── dashboard/
+│   │   └── DashboardPage.jsx (6 KPI metrics, 3 Chart.js graphs, recent orders & low stock tables)
+│   ├── products/
+│   │   └── ProductsPage.jsx  (Product table, search, category filter, pagination, CRUD modals)
+│   ├── categories/
+│   │   └── CategoriesPage.jsx(Department cards with SKU counts and icon themes)
+│   ├── warehouses/
+│   │   └── WarehousesPage.jsx(Visual facility cards, capacity progress bars, stock counts)
+│   ├── suppliers/
+│   │   └── SuppliersPage.jsx (Vendor directory table, contact details, rating stars)
+│   ├── customers/
+│   │   └── CustomersPage.jsx (B2B client accounts, order counts, lifetime spend in INR)
+│   ├── purchase-orders/
+│   │   └── PurchaseOrdersPage.jsx (PO requisitions, status badges, approval workflow)
+│   ├── sales-orders/
+│   │   └── SalesOrdersPage.jsx    (Fulfillment list, PDF Commercial Tax Invoice generator)
+│   ├── reports/
+│   │   └── ReportsPage.jsx   (Quarterly revenue charts, CSV Excel download & PDF export)
+│   └── settings/
+│       └── SettingsPage.jsx  (User profile, Company GSTIN info, Security & password reset)
+├── services/
+│   ├── api.js       (Axios instance with JWT bearer interceptors for Spring Boot)
+│   └── mockData.js  (Pre-populated mock dataset for offline development & testing)
+├── context/
+│   └── AppContext.jsx (Central React Context managing state across all 10 pages)
+├── routes/
+│   └── AppRoutes.jsx  (Application routing configuration)
+├── utils/
+│   └── formatters.js  (INR currency ₹, date, number, badge style helpers)
+├── index.css
+├── App.jsx
+└── main.jsx
+
+App Modules & Pages Functional Breakdown:
+1. Login Page        : Work email, password, remember me, quick Manager & Employee demo buttons.
+2. Register Page     : Account registration with role selection (Manager / Employee).
+3. Dashboard         : 6 KPI Cards (Total Products, Warehouses, Suppliers, Low Stock Alert, Today's Sales, Monthly Revenue).
+                       3 Chart.js Graphs (Monthly Revenue Line Chart, Stock Category Doughnut Chart, Warehouse Capacity Bar Chart).
+                       Tables for Recent Sales Orders and Low Stock Warning Items.
+4. Products          : Product catalog with SKU, Category, Warehouse location, Stock quantity, Price/Cost, and Status badges.
+5. Warehouses        : Visual facility grid with percentage capacity progress bars, unit stock counts, and manager details.
+6. Suppliers         : Vendor directory table with contact person, phone, email, rating stars, and CRUD actions.
+7. Categories        : Department cards with category codes, descriptions, and item counts.
+8. Customers         : B2B client accounts with lifetime spend formatted in Indian Rupees (₹).
+9. Purchase Orders   : PO requisitions list with status badges (Pending, Approved, Received) & PO details modal.
+10. Sales Orders     : Fulfillment list with SO status, customer address, and printable Commercial Tax Invoice (PDF) preview modal.
+11. Reports          : Sales velocity analytics, CSV Excel export, and PDF printable report views.
+12. Settings         : User profile, company legal GSTIN info, default base currency (INR ₹), security password change.
+
+
+--------------------------------================--------------------------------
+3. BACKEND INTEGRATION READY ARCHITECTURE
+--------------------------------================--------------------------------
+Location: c:\Inventria (Spring Boot Backend Root)
+
+Spring Boot Configuration (`pom.xml`):
+- GroupId        : `com.inventria`
+- ArtifactId     : `inventria-api`
+- Spring Boot    : 4.1.0 (Java 25)
+- Dependencies   : 
+  * Spring Boot Starter WebMVC (REST API endpoints)
+  * Spring Boot Starter Data JPA (Hibernate ORM database persistence)
+  * Spring Boot Starter Security (Authentication & Role-Based Access Control)
+  * Spring Boot Starter Validation (DTO validation rules)
+  * PostgreSQL Driver (Production Relational Database)
+  * Lombok (Data DTOs, Entities, and Boilerplate Reduction)
+
+Rest API Endpoint Mappings Prepared in Frontend (`src/services/api.js`):
+- GET /api/v1/products           : List catalog products with pagination & search
+- POST /api/v1/products          : Create new inventory product
+- PUT /api/v1/products/{id}      : Update inventory product
+- DELETE /api/v1/products/{id}   : Remove inventory product
+- GET /api/v1/warehouses         : Fetch warehouse facilities & capacity metrics
+- POST /api/v1/suppliers         : Register vendor supplier
+- GET /api/v1/purchase-orders    : Fetch purchase orders
+- POST /api/v1/purchase-orders   : Create new purchase order requisition
+- GET /api/v1/sales-orders       : Fetch sales orders
+- POST /api/v1/sales-orders      : Create new sales fulfillment order
+
+
+--------------------------------================--------------------------------
+4. VERIFICATION & BUILD STATUS
+--------------------------------================--------------------------------
+- Production Bundle Build : Successfully built with zero errors via `npm run build`.
+- Vite Development Server : Running at http://127.0.0.1:5173/
+- Automated E2E Testing   : Verified 100% of pages, forms, modals, INR currency formatting, and commercial tax invoice generation using browser subagent testing.
+
+================================================================================
+                              END OF REPORT
+================================================================================
